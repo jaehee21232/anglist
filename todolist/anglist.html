@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘할거</title>
+    <link rel="stylesheet" href="anglistcss.css">
+    <script>
+            var chtextnum = 0;
+            var listnum = 0;
+            var chdiv = null;
+        function listvalue(){
+            const input = document.getElementById("ang_value_input")
+            if (input.value == ""){
+                return
+            }
+            listnum += 1;
+            const listm = document.getElementById("ang_list_box");
+            const input_value = document.getElementById("ang_value_input").value; //input 값 가져옴
+
+            const newlist = document.createElement('div'); //사용할 div 만듬
+            const newlist2 = document.createElement('div');
+            const buttondiv = document.createElement('div');
+            const button1 = document.createElement('div');
+            const button2 = document.createElement('div');
+            const button3 = document.createElement('div');
+
+            const newText = document.createTextNode(input_value);//input 값 가져온걸 newtext에다가 저장
+
+            newlist.setAttribute("class", ("listtext" + listnum));
+            newlist.setAttribute("id", "ang_tolist");
+            newlist.appendChild(newlist2);
+            newlist2.appendChild(newText);
+            newlist2.setAttribute("class", ("listtext" + listnum))
+            newlist2.setAttribute("id", "listtext")
+            newlist.appendChild(buttondiv);
+            buttondiv.appendChild(button1);
+            buttondiv.appendChild(button2);
+            buttondiv.appendChild(button3);
+            buttondiv.setAttribute("id", "buttons")
+
+            button1.setAttribute("id", ("buttonone" + listnum)) //버튼1
+            button1.setAttribute("class", ("listtext" + listnum))
+            const button1text = document.createTextNode("✓");
+            button1.appendChild(button1text);
+            button1.setAttribute("onclick", "btn1click(this.id)");
+            button1.style.cssText = 'color: aqua; display: flex; justify-content: center; align-items: center; border:1px solid aqua; border-radius: 70%; width: 20px; height: 20px;';
+
+            button2.setAttribute("id", ("buttontwo" + listnum)) //버튼2
+            button2.setAttribute("class", ("listtext" + listnum))
+            const button2text = document.createTextNode("⟋");
+            button2.appendChild(button2text);
+            button2.setAttribute("onclick", "btn2click(this.id)");
+            button2.style.cssText = 'display: flex;justify-content: center;align-items: center;color: lightgreen;border-radius: 70%;border: 1px solid lightgreen;width: 20px;height: 20px;'
+
+            button3.setAttribute("id", ("buttonthr"  + listnum)) //버튼3
+            button3.setAttribute("class", ("listtext" + listnum))
+            const button3text = document.createTextNode("✕");
+            button3.appendChild(button3text);
+            button3.setAttribute("onclick", "btn3click(this.id)")
+            button3.style.cssText = 'display: flex;justify-content: center;align-items: center;color:crimson;border-radius: 70%;border: 1px solid crimson;width: 20px;height: 20px;'
+
+            listm.appendChild(newlist);
+            input.value = null; //input값 초기화
+        }
+        function btn1click(ee){ //버튼1
+            const chclass1 = document.getElementById(ee);
+            const btn1_class = chclass1.className;
+            const chtext1 = document.getElementsByClassName(btn1_class);
+            chtext1[1].style.textDecoration = "line-through";
+            chtext1[1].style.color = "gray";
+        }
+        function btn2click(ee){ //버튼2
+            const chinput = document.getElementById("ang_value_input");
+            chinput.focus() //input으로 이동
+
+            const textbutton = document.getElementById("ang_button");
+            textbutton.innerHTML = "수정"
+            textbutton.setAttribute("onclick","changelist()") //onclick 을 바꿔줌
+
+            const chclass2 = document.getElementById(ee);
+            const btn2_class = chclass2.className;
+            const chtext3 = document.getElementsByClassName(btn2_class);
+            chdiv = chtext3
+        }
+        function btn3click(ee){ //버튼3
+            const chclass3 = document.getElementById(ee); //버튼3 가져옴
+            const btn3_class = chclass3.className; 
+            const chtext2 = document.getElementsByClassName(btn3_class);
+            const chtextmom = document.getElementById("ang_list_box");
+            chtext2[0].remove()
+        }
+        function changelist(){
+            const inputdiv = document.getElementById("ang_value_input");
+            const chtextdiv = document.getElementsByClassName(chdiv[1].className);
+            chtextdiv[1].innerHTML = inputdiv.value;
+            inputdiv.value = null;
+            
+            const textbutton = document.getElementById("ang_button");
+            textbutton.setAttribute("onclick","listvalue()")
+            textbutton.innerHTML = "확인"
+            
+        }
+        
+    </script>
+</head>
+<body>
+    <div class="ang_main">
+        <div class="ang_main_box">
+            <header class="ang_head">
+                <p class="ang_headfont1">TODOLIST</p>
+            </header>
+            <div class="ang_item_box" id="ang_list_box">
+                
+            </div>
+            <div class="ang_item_input">
+                <div class="ang_input">
+                <input id="ang_value_input" class="ang_value_input" type="text" placeholder="텍스트를 입력해주세요...">
+                </div>
+                <button class="ang_button" id="ang_button" onclick="listvalue()">
+                    확인
+                </button>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
